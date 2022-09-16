@@ -2,7 +2,7 @@
 from os import getcwd
 
 
-with open("G:\\My Drive\\CSC221\\advent_of_code\\input8.txt", 'r') as f:
+with open(getcwd() + "\\src\\+dayEight\\input8.txt", 'r') as f:
     data = f.read().split('\n')
 
 '''The stuff in # does not run it is just the previous part or me explaining my code'''
@@ -248,7 +248,7 @@ class digitalNumber:
                 fivePossible.update({item: occurences})
 
         for key in fivePossible:
-            if (fivePossible[key] != 5 and 
+            if (fivePossible[key] != 5 and
                 fivePossible[key] > fivePossible[fiveMost]):
                 fiveMost = key
 

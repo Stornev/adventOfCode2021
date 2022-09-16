@@ -1,6 +1,6 @@
 from os import getcwd
 
-with open(file= getcwd() + "\\advent_of_code\input4.txt") as f:
+with open(file= getcwd() + "\\src\\\%dayFour\\input4.txt") as f:
     data = f.read().strip().split(sep="\n\n")
 
 # board is cool

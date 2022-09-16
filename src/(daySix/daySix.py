@@ -1,6 +1,6 @@
 from os import getcwd
 
-with open(file= getcwd() + "\\advent_of_code\\input6.txt") as f:
+with open(file= getcwd() + "\\src\\(daySix\\input6.txt") as f:
     data = f.read().strip().split(sep=",")
 
 data = [int(x) for x in data]

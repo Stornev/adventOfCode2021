@@ -1,8 +1,7 @@
 from os import getcwd
 import math
-from statistics import mean
 
-with open(file= getcwd() + "\\advent_of_code\\input7.txt") as f:
+with open(file= getcwd() + "\\src\\)daySeven\\input7.txt") as f:
     data = f.read().strip().split(sep=",")
 
 """Part One"""

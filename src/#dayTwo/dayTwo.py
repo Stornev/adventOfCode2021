@@ -1,6 +1,6 @@
 import os
 
-with open(file= os.getcwd() + "\\advent_of_code\input2.txt") as f:
+with open(file= os.getcwd() + "\\src\\#dayTwo\\input2.txt") as f:
     data = f.read().strip().split(sep="\n")
 
 horizontal_pos = 0

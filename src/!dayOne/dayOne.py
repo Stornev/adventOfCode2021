@@ -1,22 +1,20 @@
 import os
 
-with open(file= os.getcwd() + "\\advent_of_code\input1.txt") as f:
+with open(file= os.getcwd() + "\\src\\!dayOne\\input1.txt") as f:
     data = f.read().strip().split(sep="\n")
 
 
 """Part one"""
+counter = 0
+for i in range(0, len(data) - 1):
+    first = int(data[i])
+    second = int(data[i+1])
+    if first < second:
+        counter += 1
 
-# counter = 0
-# for i in range(0, len(data) - 1):
-#     first = int(data[i])
-#     second = int(data[i+1])
-#     if first < second:
-#         counter += 1
-
-# print(counter)
+print(counter)
 
 """Part two"""
-
 sum_of_measurements = []
 
 for i in range(0, len(data) - 2):

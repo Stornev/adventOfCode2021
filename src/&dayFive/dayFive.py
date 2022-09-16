@@ -35,7 +35,7 @@ class board:
 
     # x = 0-1000 y = 0-1000
     def drawDiagram(self):
-        with open("advent_of_code\output5.txt", "w") as f:
+        with open("output5.txt", "w") as f:
             for row in self.baseBoard:
                 for column in row:
                     f.write(column)
@@ -109,7 +109,7 @@ class board:
                     self.baseBoard[yIndex][xIndex] = str(upOne)
 
 
-with open(file= os.getcwd() + "\\advent_of_code\\input5.txt") as f:
+with open(file= os.getcwd() + "\\src\\&dayFive\\input5.txt") as f:
     data = f.read().strip().split(sep="\n")
 
 myBoard = board()

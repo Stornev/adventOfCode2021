@@ -1,6 +1,6 @@
 import os
 
-with open(file= os.getcwd() + "\\advent_of_code\input3.txt") as f:
+with open(file= os.getcwd() + "\\src\\$dayThree\\input3.txt") as f:
     data = f.read().strip().split(sep="\n")
 
 """Part One"""
