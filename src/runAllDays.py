@@ -6,6 +6,7 @@ import _04dayFive.dayFive as d5
 import _05daySix.daySix as d6
 import _06daySeven.daySeven as d7
 import _07dayEight.dayEight as d8
+import _08dayNine.dayNine as d9
 
 data1 = d1.getData()
 data2 = d2.getData()
@@ -16,6 +17,7 @@ data6 = d6.getData()
 data7 = d7.getData()
 data8p1 = d8.getData()
 data8p2 = d8.getData()
+data9 = d9.getData()
 
 
 print(f'Day 1 Part One: {str(d1.partOne(data1))}')

@@ -16,3 +16,8 @@ def makeInputLink(day: int):
     baseDay = base + str(day - 1) + 'day' + numbersToWords[day]
     
     return baseDay + '\\input' + str(day) + '.txt'
+
+def makeOutputLink(day: int):
+    base = makeInputLink(day)
+    link = base.replace('input', 'output')
+    return link
