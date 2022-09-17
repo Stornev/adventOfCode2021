@@ -7,7 +7,6 @@ import _05daySix.daySix as d6
 import _06daySeven.daySeven as d7
 import _07dayEight.dayEight as d8
 import _08dayNine.dayNine as d9
-import termcolor
 
 data1 = d1.getData()
 data2 = d2.getData()
@@ -58,8 +57,5 @@ print(f'Day 8 Part One: {d8.partOne(data8p1)}')
 print(f'Day 8 Part Two: {d8.partTwo(data8p2)}\n')
 
 print(f'Day 9 Part One: {d9.partOne(data9)}')
-
-print('hi')
-print(termcolor.colored('test', color='blue', attrs=['bold', 'blink']))
 
 #TODO add more days if I've completed them below

@@ -2,7 +2,7 @@ import makeLink
 import termcolor
 
 def getData() -> list:
-    with open(makeLink.makeInputLink(9)) as f:
+    with open(makeLink.makeTestInputLink()) as f:
         data = f.read().split('\n')
 
     # add data padding
@@ -13,19 +13,20 @@ def getData() -> list:
         correct += ' '
         data[i] = correct
 
-    data.insert(0, ' ' * 102)
-    data.insert(101, ' ' * 102)
+    # add first line padding and last line padding
+    data.insert(0, ' ' * len(data[0]))
+    data.insert(len(data), ' ' * len(data[0]))
 
     return data
 
 def writeDataToFile() -> None:
     data = getData()
     with open(file=makeLink.makeOutputLink(9), mode='w') as f:
-        for line in data:
-            if data.index(line) != 100:
-                f.write(line + '\n')
+        for i in range(0, len(data)):
+            if i != len(data) - 1:
+                f.write(data[i] + '\n')
             else:
-                f.write(line)
+                f.write(data[i])
             
 
 class smokeBoard:
@@ -42,7 +43,7 @@ class smokeBoard:
         for row in self.board:
             for col in row:
                 if col == chr(88):
-                    print(termcolor.colored(col, 'blue', attrs=['bold', 'blink']), end='')
+                    print(termcolor.colored(col, 'blue', attrs=['bold']), end='')
                 else:
                     print(col, end='')
             print()
@@ -50,8 +51,8 @@ class smokeBoard:
     def checkIfLowpoint(self, row: int, col: int) -> bool:
         # given that current is not ' '
         current = self.board[row][col]
-        above = self.board[row + 1][col]
-        below = self.board[row - 1][col]
+        above = self.board[row - 1][col]
+        below = self.board[row + 1][col]
         left = self.board[row][col - 1]
         right = self.board[row][col + 1]
 
@@ -80,12 +81,58 @@ class smokeBoard:
             return True
         return False
     
+    # make all inpassable of basin an X
+    # defunct, was for visualization of all the basins
     def makeAllNineChi(self):
         for i in range(len(self.board)):
             for x in range(len(self.board[i])):
                 if self.board[i][x] == '9':
                     self.board[i] = self.board[i].replace('9', chr(88))
 
+    # return a list of tuples that correspond to all the points in a basin
+    # the values in the tuples will be a coordinate pair of (row, column)
+    # that correspond to their position in self.board
+    def exploreBasin(self, lowpoint: tuple) -> list:
+        row = lowpoint[0]
+        col = lowpoint[1]
+        # initial exploration
+        posList = self.exploreBranch((row, col))
+
+        # main exploration
+        cache = []
+        for tuple in posList:
+            littleCache = self.exploreBranch((tuple[1][0], tuple[1][1]))
+            print(littleCache)
+
+        # print(lowpoint, posList)
+
+    def exploreBranch(self, branch: tuple):
+        row = branch[0]
+        col = branch[1]
+        above = self.board[row - 1][col]
+        below = self.board[row + 1][col]
+        left = self.board[row][col - 1]
+        right = self.board[row][col + 1]
+
+        posList = [
+            (above, (row - 1, col)), (below, (row + 1, col)),
+            (left, (row, col - 1)), (right, (row, col + 1))
+        ]
+
+        posListValues = [above, below, left, right]
+        
+        index = 0
+        while ' ' in posListValues or '9' in posListValues:
+            value = posList[index][0]
+
+            if value == ' ' or value == '9':
+                posList.remove(posList[index])
+                posListValues.remove(posListValues[index])
+                index -= 1
+
+            index += 1
+
+        return posList
         
 def partOne(data: list) -> int:
     myBoard = smokeBoard(data)
@@ -101,6 +148,16 @@ def partOne(data: list) -> int:
             
 def partTwo(data: list) -> int:
     myOtherBoard = smokeBoard(data)
-    smokeBoard.makeAllNineChi(myOtherBoard)
-    smokeBoard.printBoard(myOtherBoard)
+
+    lowPoints = []
+    for i in range(1, len(data) - 1):
+        for x in range(1, len(data[i]) - 1):
+            if smokeBoard.checkIfLowpoint(myOtherBoard, i, x):
+                lowPoints.append((i,x))
+
+    for lowPoint in lowPoints:
+        # smokeBoard.printBoard(myOtherBoard)
+        smokeBoard.exploreBasin(myOtherBoard, lowPoint)
+        
+                
     return 0
