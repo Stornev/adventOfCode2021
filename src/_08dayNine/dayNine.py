@@ -42,7 +42,7 @@ class smokeBoard:
         for row in self.board:
             for col in row:
                 if col == chr(88):
-                    print(termcolor.colored(col, 'blue', attrs=['bold']), end='')
+                    print(termcolor.colored(col, 'blue', attrs=['bold', 'blink']), end='')
                 else:
                     print(col, end='')
             print()
