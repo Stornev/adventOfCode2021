@@ -1,7 +1,12 @@
-import os
+from makeLink import makeInputLink
+from os import getcwd
 
+def getData():
+    with open(file=makeInputLink(5)) as f:
+        data = f.read().strip().split(sep="\n")
 
-"""Part One"""
+    return data
+
 class line:
     firstCoords = []
     secondCoords = []
@@ -26,7 +31,6 @@ class line:
 class board:
     baseBoard = [['.' for i in range(0, 1000)] for x in range(0, 1000)]
 
-    
     def __init__(self) -> None:
         pass
 
@@ -35,15 +39,14 @@ class board:
 
     # x = 0-1000 y = 0-1000
     def drawDiagram(self):
-        with open("output5.txt", "w") as f:
+        with open(getcwd() + "\\src\\_04dayFive\\output5.txt", "w") as f:
             for row in self.baseBoard:
                 for column in row:
                     f.write(column)
                 f.write("\n")
 
-
     # x1, y1 -> x2, y2
-    def putLineOnBoard(self, currentLine: line):
+    def putLineOnBoard(self, currentLine: line, diag: bool):
         horOrVer = line.horizontalOrVertical(currentLine)
 
         if horOrVer == 'horizontal':
@@ -81,8 +84,7 @@ class board:
                     upOne = int(self.baseBoard[i][verticalCoord]) + 1
                     self.baseBoard[i][verticalCoord] = str(upOne)
 
-        # Part two     
-        elif horOrVer == 'diagonal':
+        if diag and horOrVer == 'diagonal':
             x1 = int(currentLine.firstCoords[0])
             x2 = int(currentLine.secondCoords[0])
             y1 = int(currentLine.firstCoords[1])
@@ -108,26 +110,48 @@ class board:
                     upOne = int(self.baseBoard[yIndex][xIndex]) + 1
                     self.baseBoard[yIndex][xIndex] = str(upOne)
 
+    def clearBoard(self):
+        self.baseBoard = [['.' for i in range(0, 1000)] for x in range(0, 1000)]
 
-with open(file= os.getcwd() + "\\src\\&dayFive\\input5.txt") as f:
-    data = f.read().strip().split(sep="\n")
+def partOne(data: list):
+    myBoard = board()
 
-myBoard = board()
+    for row in data:
+        currentLine = line(row)
+        board.putLineOnBoard(myBoard, currentLine, False)
 
-for row in data:
-    currentLine = line(row)
-    board.putLineOnBoard(myBoard, currentLine)
+    boardAsList = board.getBoard(myBoard)
+    
 
-boardAsList = board.getBoard(myBoard)
+    moreThanTwo = 0
+    for row in boardAsList:
+        for item in row:
+            if item != '.':
+                value = int(item)
+                if value >= 2:
+                    moreThanTwo += 1
 
-moreThanTwo = 0
-for row in boardAsList:
-    for item in row:
-        if item != '.':
-            value = int(item)
-            if value >= 2:
-                moreThanTwo += 1
-            
+    return moreThanTwo
+                
+def partTwo(data: list):
+    myBoard = board()
+    # somehow the previous part is getting over to this one
+    board.clearBoard(myBoard)
 
-print(moreThanTwo)
-board.drawDiagram(myBoard)
+    for row in data:
+        currentLine = line(row)
+        board.putLineOnBoard(myBoard, currentLine, True)
+
+    boardAsList = board.getBoard(myBoard)
+    # if you want to see the board
+    # board.drawDiagram(myBoard)
+
+    moreThanTwo = 0
+    for row in boardAsList:
+        for item in row:
+            if item != '.':
+                value = int(item)
+                if value >= 2:
+                    moreThanTwo += 1
+
+    return moreThanTwo

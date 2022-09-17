@@ -1,10 +1,28 @@
-from os import getcwd
+from makeLink import makeInputLink
 import math
 
-with open(file= getcwd() + "\\src\\)daySeven\\input7.txt") as f:
-    data = f.read().strip().split(sep=",")
+def getData():
+    with open(file=makeInputLink(7)) as f:
+        data = f.read().strip().split(sep=",")
 
-"""Part One"""
+    return data
+
+def makeFuelDict(data: list):
+    data = [int(x) for x in data]
+    minimum = min(data)
+    maximum = max(data)
+
+    fuelDict = {x : data.count(x) for x in range(minimum, maximum + 1)}
+    return fuelDict
+
+def findLeast(fuelConsumptions: dict):
+    least = math.inf
+    for key in fuelConsumptions:
+        if fuelConsumptions[key] < least:
+            least = fuelConsumptions[key]
+
+    return least
+
 def fuelConsumption1(value: int, fuelDict: dict):
     fuel = 0
     
@@ -14,7 +32,12 @@ def fuelConsumption1(value: int, fuelDict: dict):
     
     return fuel
 
-"""Part two"""
+def partOne(data: list):
+    fuelDict = makeFuelDict(data)
+    fuelConsumptions = {num : fuelConsumption1(num, fuelDict) for num in fuelDict}
+    return findLeast(fuelConsumptions)
+
+
 def fuelConsumption2(value: int, fuelDict: dict):
     fuel = 0
     
@@ -28,22 +51,9 @@ def fuelConsumption2(value: int, fuelDict: dict):
             # stop / 2 * (1 + stop)
             fuel += int((horizontalMovement / 2) * (1 + horizontalMovement) * fuelDict[key])
                  
-
     return fuel
 
-data = [int(x) for x in data]
-minimum = min(data)
-maximum = max(data)
-
-fuelDict = {x : data.count(x) for x in range(minimum, maximum + 1)}
-
-# change the fuelConsumption method
-fuelConsumptions = {num : fuelConsumption2(num, fuelDict) for num in fuelDict}
-
-least = math.inf
-for key in fuelConsumptions:
-    if fuelConsumptions[key] < least:
-        least = fuelConsumptions[key]
-
-print(least)
-
+def partTwo(data: list):
+    fuelDict = makeFuelDict(data)
+    fuelConsumptions = {num : fuelConsumption2(num, fuelDict) for num in fuelDict}
+    return findLeast(fuelConsumptions)

@@ -1,9 +1,11 @@
-from os import getcwd
+from makeLink import makeInputLink
 
-with open(file= getcwd() + "\\src\\\%dayFour\\input4.txt") as f:
-    data = f.read().strip().split(sep="\n\n")
+def getData():
+    with open(file= makeInputLink(4)) as f:
+        data = f.read().strip().split(sep="\n\n")
 
-# board is cool
+    return data
+
 class bingoBoard:
     board = [[]]
 
@@ -65,49 +67,23 @@ class bingoBoard:
                 return True
         return False
 
+def partOne(data: list) -> int:
+    # make a new list object to not taint it for partTwo
+    data = data.copy()
+    numbersChosen = data.pop(0).split(sep=',')
 
-"""Part One"""
-numbersChosen = data.pop(0).split(sep=',')
+    boardList = []
+    for i in range(0, len(data)):
+        boardList.append(bingoBoard(data[i]))
 
-boardList = []
-for i in range(0, len(data)):
-    boardList.append(bingoBoard(data[i]))
-
-# for num in numbersChosen:
-#     for board in boardList:
-#         indexTuple = bingoBoard.findNumInBoard(board, num)
-#         if type(indexTuple) == tuple:
-#             bingoBoard.fillSpot(board, indexTuple[0], indexTuple[1])
-    
-#     for board in boardList:
-#         if bingoBoard.checkIfWon(board):
-#             sum = 0
-#             wonBoard = bingoBoard.getBoard(board)
-
-#             for i in range(0,5):
-#                 for x in range(0,5):
-#                     if wonBoard[i][x] != -1:
-#                         sum += wonBoard[i][x]
-#             print(sum * int(num))
-#             print()
-#             exit()
-
-"""Part Two"""
-numOfBoards = len(data)
-
-listOfBoardsWon = []
-for num in numbersChosen:
-    for board in boardList:
-        indexTuple = bingoBoard.findNumInBoard(board, num)
-        if type(indexTuple) == tuple:
-            bingoBoard.fillSpot(board, indexTuple[0], indexTuple[1])
-    
-    
-    for board in boardList:
-        if board not in listOfBoardsWon and bingoBoard.checkIfWon(board):
-            listOfBoardsWon.append(board)
-
-            if len(listOfBoardsWon) == 100:    
+    for num in numbersChosen:
+        for board in boardList:
+            indexTuple = bingoBoard.findNumInBoard(board, num)
+            if type(indexTuple) == tuple:
+                bingoBoard.fillSpot(board, indexTuple[0], indexTuple[1])
+        
+        for board in boardList:
+            if bingoBoard.checkIfWon(board):
                 sum = 0
                 wonBoard = bingoBoard.getBoard(board)
 
@@ -115,4 +91,34 @@ for num in numbersChosen:
                     for x in range(0,5):
                         if wonBoard[i][x] != -1:
                             sum += wonBoard[i][x]
-                print(sum * int(num))
+                
+                return sum * int(num)
+                
+def partTwo(data: list) -> int:
+    numbersChosen = data.pop(0).split(sep=',')
+
+    boardList = []
+    for i in range(0, len(data)):
+        boardList.append(bingoBoard(data[i]))
+
+    listOfBoardsWon = []
+    for num in numbersChosen:
+        for board in boardList:
+            indexTuple = bingoBoard.findNumInBoard(board, num)
+            if type(indexTuple) == tuple:
+                bingoBoard.fillSpot(board, indexTuple[0], indexTuple[1])
+        
+        
+        for board in boardList:
+            if board not in listOfBoardsWon and bingoBoard.checkIfWon(board):
+                listOfBoardsWon.append(board)
+
+                if len(listOfBoardsWon) == 100:    
+                    sum = 0
+                    wonBoard = bingoBoard.getBoard(board)
+
+                    for i in range(0,5):
+                        for x in range(0,5):
+                            if wonBoard[i][x] != -1:
+                                sum += wonBoard[i][x]
+                    return sum * int(num)

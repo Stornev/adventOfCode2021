@@ -1,11 +1,7 @@
+from makeLink import makeInputLink
 
-from os import getcwd
-
-
-with open(getcwd() + "\\src\\+dayEight\\input8.txt", 'r') as f:
-    data = f.read().split('\n')
-
-'''The stuff in # does not run it is just the previous part or me explaining my code'''
+# puzzle specs: https://pastebin.com/BkF4nGHj
+# your own if you have an acct: https://adventofcode.com/2021/day/8
 # puzzle specs
 # 0 - abcefg
 # 1 - cf
@@ -18,32 +14,38 @@ with open(getcwd() + "\\src\\+dayEight\\input8.txt", 'r') as f:
 # 8 - abcdefg
 # 9 - abcdfg
 
-# numbers = {
-#     0: 'abcefg', 1: 'cf', 2: 'acdeg', 3: 'acdfg', 4: 'bcdf', 
-#     5: 'abdfg', 6: 'abdefg', 7: 'acf', 8: 'abcdefg', 9: 'abcdfg'
-# }
+def getData():
+    with open(makeInputLink(8)) as f:
+        data = f.read().split('\n')
 
-# numbersLen = {i : len(numbers[i]) for i in range(0,10)}
+    return data
 
-# easyNums = {1: 2, 4: 4, 7: 3, 8: 7}
-# countNums = {1: 0, 4: 0, 7: 0, 8: 0}
+def partOne(data: list):
+    """only 1,4,7,8 in output values (after |)"""
+    numbers = {
+        0: 'abcefg', 1: 'cf', 2: 'acdeg', 3: 'acdfg', 4: 'bcdf', 
+        5: 'abdfg', 6: 'abdefg', 7: 'acf', 8: 'abcdefg', 9: 'abcdfg'
+    }
 
-"""Part One - only 1,4,7,8 in output values (after |)"""
-# for i in range(0, len(data)):
-#     data[i] = data[i].split('| ')[-1]
+    numbersLen = {i : len(numbers[i]) for i in range(0,10)}
 
-# for output in data:
-#     outputList = output.split(' ')
-#     for num in outputList:
-#         for easyNum in easyNums:
-#             # print(f"num: {num}, easyNums[easyNum]: {easyNums[easyNum]}")
-#             if len(num) == easyNums[easyNum]:
-#                 countNums[easyNum] += 1
-
+    easyNums = {1: 2, 4: 4, 7: 3, 8: 7}
+    countNums = {1: 0, 4: 0, 7: 0, 8: 0}
     
-# print(sum(countNums.values()))
+    for i in range(0, len(data)):
+        data[i] = data[i].split('| ')[-1]
 
-"""Part two"""
+    for output in data:
+        outputList = output.split(' ')
+        for num in outputList:
+            for easyNum in easyNums:
+                if len(num) == easyNums[easyNum]:
+                    countNums[easyNum] += 1
+
+        
+    return sum(countNums.values())
+
+# necessary class for part two
 class digitalNumber:
     # septem is latin prefix for seven, therefore should be used to represent
     # the first seven letters of the alphabet that is used in this puzzle
@@ -55,7 +57,6 @@ class digitalNumber:
         0: 'abcefg', 1: 'cf', 2: 'acdeg', 3: 'acdfg', 4: 'bcdf', 
         5: 'abdfg', 6: 'abdefg', 7: 'acf', 8: 'abcdefg', 9: 'abcdfg'
     }
-    
 
     numAsDict = {}
     mapLetters = {}
@@ -312,42 +313,18 @@ class digitalNumber:
         return int(strNum)
 
 
+def partTwo(data: list):
+    digitalNumberList = []
+    for line in data:
+        digitalNumberList.append(digitalNumber(line))
 
-        
-        
-
-# testCase = digitalNumber('gafbced ceadfg gabfc ae cgbfae febcd cefba cfgadb bgea ace | fbdce eca bgafc afgdcb')
-# map = digitalNumber.makeMap(testCase)
-# digitalNumber.setMapLetters(testCase, map)
-# digitalNumber.mapNumAsDict(testCase)
-# digitalNumber.printNumber(testCase)
-# print(digitalNumber.doesOutputEqualNumbers(testCase))
-
-# strNum = ''
-# for i in range(0, len(digitalNumber.outputNumbers)):
-#     strNum += str(digitalNumber.outputNumbers[i])
-
-# print(int(strNum))
-
-# print(map)
-
-# testCaseMap = {'a': 'c', 'b': 'g', 'c': 'e', 'd': 'b', 'e': 'd', 'f': 'a', 'g': 'f'}
-# testCaseMap2 = digitalNumber.makeMap(testCase)
-# print(testCaseMap2)
-
-# digitalNumber.setMapLetters(testCase, testCaseMap2)
-# digitalNumber.mapNumAsDict(testCase)
-# print(digitalNumber.doesOutputEqualNumbers(testCase))
-
-digitalNumberList = []
-for line in data:
-    digitalNumberList.append(digitalNumber(line))
-
-total = 0
-for i in range(0, len(digitalNumberList)):
-    map = digitalNumber.makeMap(digitalNumberList[i])
-    digitalNumber.setMapLetters(digitalNumberList[i], map)
-    # digitalNumber.mapNumAsDict(digitalNumberList[i])
-    total += digitalNumber.makeOutputNum(digitalNumberList[i])
-
-print(total)
+    total = 0
+    for i in range(0, len(digitalNumberList)):
+        map = digitalNumber.makeMap(digitalNumberList[i])
+        digitalNumber.setMapLetters(digitalNumberList[i], map)
+        total += digitalNumber.makeOutputNum(digitalNumberList[i])
+        # to print the four digit seven segment display of every display
+        # digitalNumber.mapNumAsDict(digitalNumberList[i])
+        # digitalNumber.printNumber(digitalNumber[i])
+    
+    return total

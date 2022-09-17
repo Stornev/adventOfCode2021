@@ -1,44 +1,48 @@
-import os
+from makeLink import makeInputLink
 
-with open(file= os.getcwd() + "\\src\\$dayThree\\input3.txt") as f:
-    data = f.read().strip().split(sep="\n")
+def getData():
+    with open(file=makeInputLink(3)) as f:
+        data = f.read().strip().split(sep="\n")
 
-"""Part One"""
-# gamma_rate = ''
-# epsilon_rate = ''
+    return data
 
-# columnsOne = {1 : 0, 2 : 0, 3 : 0, 4 : 0, 
-#               5 : 0, 6 : 0, 7: 0, 8 : 0, 
-#               9 : 0, 10 : 0, 11 : 0, 12 : 0}
+def partOne(data: list) -> int:
+    gamma_rate = ''
+    epsilon_rate = ''
 
-# columnsZero = {1 : 0, 2 : 0, 3 : 0, 4 : 0, 
-#                5 : 0, 6 : 0, 7: 0, 8 : 0, 
-#                9 : 0, 10 : 0, 11 : 0, 12 : 0}
+    columnsOne = {
+        1 : 0, 2 : 0, 3 : 0, 4 : 0, 
+        5 : 0, 6 : 0, 7: 0, 8 : 0, 
+        9 : 0, 10 : 0, 11 : 0, 12 : 0
+    }
 
-# for i in range(0, len(data)):
-#     current = data[i]
+    columnsZero = {
+        1 : 0, 2 : 0, 3 : 0, 4 : 0, 
+        5 : 0, 6 : 0, 7: 0, 8 : 0, 
+        9 : 0, 10 : 0, 11 : 0, 12 : 0
+    }
 
-#     for x in range(0, len(data[i])):
-#         num = int(current[x])
+    for i in range(0, len(data)):
+        current = data[i]
 
-#         if num == 1:
-#             columnsOne[x+1] += 1
-#         elif num == 0:
-#             columnsZero[x+1] += 1
+        for x in range(0, len(data[i])):
+            num = int(current[x])
 
-# for y in range(1, 13):
+            if num == 1:
+                columnsOne[x+1] += 1
+            elif num == 0:
+                columnsZero[x+1] += 1
 
-#     if columnsOne[y] > columnsZero[y]:
-#         gamma_rate += '1'
-#         epsilon_rate += '0'
-#     else:
-#         gamma_rate += '0'
-#         epsilon_rate += '1'
+    for y in range(1, 13):
 
-# print(int(gamma_rate, 2) * int(epsilon_rate, 2))
+        if columnsOne[y] > columnsZero[y]:
+            gamma_rate += '1'
+            epsilon_rate += '0'
+        else:
+            gamma_rate += '0'
+            epsilon_rate += '1'
 
-"""Part Two"""
-co2 = data.copy()
+    return int(gamma_rate, 2) * int(epsilon_rate, 2)
 
 def mostCommonBit(binaryList: list, column: int):
     ones = 0
@@ -51,25 +55,28 @@ def mostCommonBit(binaryList: list, column: int):
 
     return '1' if ones >= zeroes else '0'
 
-for i in range(0, 12):
-    delete = []
-    deleteCO2 = []
-    most_common_bit = mostCommonBit(data, i)
-    least_common_bit = '1' if mostCommonBit(co2, i) == '0' else '0'
+def partTwo(data: list):
+    co2 = data.copy()
 
-    for line in data:
-        if line[i] != most_common_bit and line not in delete:
-            delete.append(line)
+    for i in range(0, 12):
+        delete = []
+        deleteCO2 = []
+        most_common_bit = mostCommonBit(data, i)
+        least_common_bit = '1' if mostCommonBit(co2, i) == '0' else '0'
 
-    for item in delete:
-        data.remove(item)
+        for line in data:
+            if line[i] != most_common_bit and line not in delete:
+                delete.append(line)
 
-    for bits in co2:
-        if bits[i] != least_common_bit and bits not in deleteCO2:
-            deleteCO2.append(bits)
+        for item in delete:
+            data.remove(item)
 
-    if len(co2) != 1:
-        for bit in deleteCO2:
-            co2.remove(bit)
-           
-print(int(data[0], 2) * int(co2[0], 2))
+        for bits in co2:
+            if bits[i] != least_common_bit and bits not in deleteCO2:
+                deleteCO2.append(bits)
+
+        if len(co2) != 1:
+            for bit in deleteCO2:
+                co2.remove(bit)
+            
+    return int(data[0], 2) * int(co2[0], 2)

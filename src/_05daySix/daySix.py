@@ -1,31 +1,28 @@
-from os import getcwd
+from makeLink import makeInputLink
 
-with open(file= getcwd() + "\\src\\(daySix\\input6.txt") as f:
-    data = f.read().strip().split(sep=",")
+def getData():
+    with open(file=makeInputLink(6)) as f:
+        data = f.read().strip().split(sep=",")
 
-data = [int(x) for x in data]
+    return data
 
-"""Part One"""
-# for i in range(80):
-#     for x in range(len(data)):
-#         current = data[x]
+def partOne(data: list):
+    data = [int(x) for x in data]
 
-#         if current == 0:
-#             data.append(8)
-#             data[x] = 6
-#         else:
-#             data[x] -= 1
+    for i in range(80):
+        for x in range(len(data)):
+            current = data[x]
 
-# print(len(data))
+            if current == 0:
+                data.append(8)
+                data[x] = 6
+            else:
+                data[x] -= 1
 
-"""Part Two"""
+    return len(data)
 
-# not 1619067452340
-# between 1,619,067,452,340 - 2,000,000,000,000
-# is 1,740,449,478,328 dictionaries FTW
 
 def mainLoop(lanternFish: dict):
-
     for i in range(0, 10):
         temp = lanternFish[i]
         lanternFish[i-1] = temp
@@ -36,23 +33,28 @@ def mainLoop(lanternFish: dict):
 
     lanternFish[-1] = 0
 
+def partTwo(data: list):
+    # not 1619067452340
+    # between 1,619,067,452,340 - 2,000,000,000,000
+    # is 1,740,449,478,328 dictionaries FTW
 
-lanternFish = {i : 0 for i in range(-1,10)}
-data.sort()
+    data = [int(x) for x in data]
+
+    lanternFish = {i : 0 for i in range(-1,10)}
+    data.sort()
+
+    for i in range(len(data)):
+        if data[i] in lanternFish:
+            lanternFish[data[i]] += 1
+        else:
+            lanternFish[data[i]] = 0
+
+    for i in range(0,256):
+        mainLoop(lanternFish)
 
 
-for i in range(len(data)):
-    if data[i] in lanternFish:
-        lanternFish[data[i]] += 1
-    else:
-        lanternFish[data[i]] = 0
+    total = 0
+    for key in lanternFish:
+        total += lanternFish[key] 
 
-for i in range(0,256):
-    mainLoop(lanternFish)
-
-
-total = 0
-for key in lanternFish:
-    total += lanternFish[key] 
-
-print(total)
+    return total
