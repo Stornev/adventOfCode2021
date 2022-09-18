@@ -2,7 +2,7 @@ import makeLink
 import termcolor
 
 def getData() -> list:
-    with open(makeLink.makeTestInputLink()) as f:
+    with open(makeLink.makeInputLink(9)) as f:
         data = f.read().split('\n')
 
     # add data padding
@@ -99,13 +99,38 @@ class smokeBoard:
         posList = self.exploreBranch((row, col))
 
         # main exploration
-        cache = []
+        bigCache = []
+        
         for tuple in posList:
-            littleCache = self.exploreBranch((tuple[1][0], tuple[1][1]))
-            print(littleCache)
+            # add inital lowPoint tuples
+            bigCache.append(tuple)
+        
+        previousLength = -1
+        while self.isDone(bigCache, previousLength):
+            for tuple in bigCache:
+                previousLength = len(bigCache)
+                littleCache = self.exploreBranch((tuple[1][0], tuple[1][1]))
+                
+                for element in littleCache:
+                    if element not in bigCache:
+                        bigCache.append(element)
+            
+        return bigCache
 
-        # print(lowpoint, posList)
+    def isDone(self, cache: list, previous: int):
+        currentLength = len(cache)
+        if previous == -1:
+            # continues to run if first occurence
+            return True
 
+        elif previous == currentLength:
+            # should mean that there is no more exploration to do
+            return False
+
+        # in all other cases continue to run
+        return True
+
+    # explore a branch of the basin (one way the basin can go)
     def exploreBranch(self, branch: tuple):
         row = branch[0]
         col = branch[1]
@@ -131,7 +156,7 @@ class smokeBoard:
                 index -= 1
 
             index += 1
-
+        
         return posList
         
 def partOne(data: list) -> int:
@@ -145,7 +170,9 @@ def partOne(data: list) -> int:
                 sumOfRisk += risk
 
     return sumOfRisk
-            
+
+# don't ask me how the hell this works
+# and this has to be the most inefficient way to do this but it works?!
 def partTwo(data: list) -> int:
     myOtherBoard = smokeBoard(data)
 
@@ -155,9 +182,12 @@ def partTwo(data: list) -> int:
             if smokeBoard.checkIfLowpoint(myOtherBoard, i, x):
                 lowPoints.append((i,x))
 
+    listOfBasins = []
     for lowPoint in lowPoints:
-        # smokeBoard.printBoard(myOtherBoard)
-        smokeBoard.exploreBasin(myOtherBoard, lowPoint)
-        
-                
-    return 0
+        listOfBasins.append(smokeBoard.exploreBasin(myOtherBoard, lowPoint))
+
+    listOfLengths = [len(basin) for basin in listOfBasins]
+    listOfLengths.sort()
+    threeLargest = listOfLengths[-1] * listOfLengths[-2] * listOfLengths[-3]
+
+    return threeLargest

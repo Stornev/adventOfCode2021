@@ -10,7 +10,7 @@ as of 9/16/2022
 - ~~Day 6~~
 - ~~Day 7~~
 - ~~Day 8~~
-- Day 9
+- ~~Day 9~~
 - Day 10
 - Day 11
 - Day 12
