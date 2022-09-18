@@ -7,6 +7,7 @@ import _05daySix.daySix as d6
 import _06daySeven.daySeven as d7
 import _07dayEight.dayEight as d8
 import _08dayNine.dayNine as d9
+import _09dayTen.dayTen as d10
 
 data1 = d1.getData()
 data2 = d2.getData()
@@ -18,6 +19,7 @@ data7 = d7.getData()
 data8p1 = d8.getData()
 data8p2 = d8.getData()
 data9 = d9.getData()
+data10 = d10.getData()
 
 
 print(f'Day 1 Part One: {str(d1.partOne(data1))}')
@@ -56,6 +58,7 @@ print(f'Day 7 Part Two: {d7.partTwo(data7)}\n')
 print(f'Day 8 Part One: {d8.partOne(data8p1)}')
 print(f'Day 8 Part Two: {d8.partTwo(data8p2)}\n')
 
+# not as slow as the others but is it efficient?
 print(f'Day 9 Part One: {d9.partOne(data9)}')
 print(f'Day 9 Part Two: {d9.partTwo(data9)}\n')
 
