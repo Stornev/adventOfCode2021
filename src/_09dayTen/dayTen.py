@@ -47,7 +47,6 @@ def partOne(data: list) -> int:
             incorrect = doOnce[1]
             total += scores[incorrect]
 
-
     return total
 
 
