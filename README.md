@@ -1,9 +1,7 @@
 # My code for Advent of Code!
 ## 2021 Edition
 
-as of 9/16/2022
----
-<mark>40%</mark>
+### as of 9/16/2022
 - ~~Day 1~~
 - ~~Day 2~~
 - ~~Day 3~~
@@ -29,3 +27,4 @@ as of 9/16/2022
 - Day 23
 - Day 24
 - Day 25
+(40%)
