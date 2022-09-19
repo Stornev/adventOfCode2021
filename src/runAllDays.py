@@ -62,4 +62,7 @@ print(f'Day 8 Part Two: {d8.partTwo(data8p2)}\n')
 print(f'Day 9 Part One: {d9.partOne(data9)}')
 print(f'Day 9 Part Two: {d9.partTwo(data9)}\n')
 
+print(f'Day 10 Part One: {d10.partOne(data10)}')
+print(f'Day 10 Part Two: {d10.partTwo(data10)}')
+
 #TODO add more days if I've completed them below

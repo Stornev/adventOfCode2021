@@ -1,7 +1,7 @@
 import makeLink as mk
 
 def getData() -> list:
-    with open(mk.makeTestInputLink()) as f:
+    with open(mk.makeInputLink(10)) as f:
         data = f.read().split('\n')
     return data
 
@@ -15,6 +15,7 @@ def isClosing(char: str):
         if key == char:
             flag = True
     return flag
+
 
 def checkCorrupted(line: str) -> tuple:
     """Check if the line is corrupted, which means an ending character is the
@@ -36,9 +37,9 @@ def checkCorrupted(line: str) -> tuple:
     
     return (False, line)
 
-scores = {')': 3, ']': 57, '}': 1197, '>': 25137}
 
 def partOne(data: list) -> int:
+    scores = {')': 3, ']': 57, '}': 1197, '>': 25137}
     total = 0
     for line in data:
         doOnce = checkCorrupted(line)
@@ -49,20 +50,30 @@ def partOne(data: list) -> int:
 
     return total
 
-scores = {'(': 1, '[': 2, '{': 3, '<': 4}
 
 def partTwo(data: list) -> int:
-    goodData = []
+    scores = {'(': 1, '[': 2, '{': 3, '<': 4}
+    totalScores = []
+    
     for i in range(len(data)):
         doOnce = checkCorrupted(data[i])
-        # print(data[i], doOnce)
-        if doOnce[0]:
-            pass
-        else:
-            current = doOnce[1]
-            goodData.append(current)
-            for i in range(len(goodData)):
-                pass
-        
 
-    return goodData
+        # only do if a line is not corrupted (cause we throw those out)
+        if not doOnce[0]:
+            current = doOnce[1]
+            littleTotal = 0
+            
+            # traverse the current string backwards because i don't want to
+            # reverse it and this is more efficient
+            # then do the puzzle specifications and add that to a list
+            for i in range(len(current) - 1, -1, -1):
+                littleTotal *= 5
+                littleTotal += scores[current[i]]
+            
+            totalScores.append(littleTotal)
+    # puzzle calls for this, at least I don't have to write a sorting algo
+    # myself AND I LOOKED IT UP THEY USE TIMSORT ITS NOT NAMED
+    # after ME BUT HAS MY NAME IN IT THATS REALLY COOL
+    totalScores.sort()
+
+    return totalScores.pop(len(totalScores) // 2)
