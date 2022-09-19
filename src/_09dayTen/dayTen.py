@@ -1,11 +1,10 @@
 import makeLink as mk
 
 def getData() -> list:
-    with open(mk.makeInputLink(10)) as f:
+    with open(mk.makeTestInputLink()) as f:
         data = f.read().split('\n')
     return data
 
-closing = {'(': ')', '[': ']', '{': '}', '<': '>'}
 partners = {')': '(', ']': '[', '}': '{', '>': '<'}
 
 def isClosing(char: str):
@@ -16,22 +15,6 @@ def isClosing(char: str):
         if key == char:
             flag = True
     return flag
-
-def checkPartner(line: str, char: str) -> tuple:
-    """Does the ending character have a romantic partner?\n
-       Returns T/F if the character has a partner, and the supposed partner"""
-    partner = ''
-    # find if there is a closing character of the character
-    index = line.find(closing[char])
-    if index == -1:
-        # if there is no closing character this is just incomplete
-        return (False, 'incomplete')
-
-
-    if char == partners[partner]:
-        return (True, partner)
-    else:
-        return (False, partner)
 
 def checkCorrupted(line: str) -> tuple:
     """Check if the line is corrupted, which means an ending character is the
@@ -51,7 +34,7 @@ def checkCorrupted(line: str) -> tuple:
             return (True, next)
     
     
-    return (False, '')
+    return (False, line)
 
 scores = {')': 3, ']': 57, '}': 1197, '>': 25137}
 
@@ -66,5 +49,20 @@ def partOne(data: list) -> int:
 
     return total
 
+scores = {'(': 1, '[': 2, '{': 3, '<': 4}
+
 def partTwo(data: list) -> int:
-    return 0
+    goodData = []
+    for i in range(len(data)):
+        doOnce = checkCorrupted(data[i])
+        # print(data[i], doOnce)
+        if doOnce[0]:
+            pass
+        else:
+            current = doOnce[1]
+            goodData.append(current)
+            for i in range(len(goodData)):
+                pass
+        
+
+    return goodData
