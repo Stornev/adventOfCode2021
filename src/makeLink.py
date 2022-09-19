@@ -11,7 +11,7 @@ def makeInputLink(day: int):
     }
     
     base = getcwd() + '\\src\\_'
-    if day < 10:
+    if day <= 10:
         base += str(0)
     baseDay = base + str(day - 1) + 'day' + numbersToWords[day]
     
