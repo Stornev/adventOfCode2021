@@ -22,5 +22,5 @@ def makeOutputLink(day: int):
     link = base.replace('input', 'output')
     return link
 
-def makeTestInputLink():
+def makeTestInputLink(*args):
     return getcwd() + '\\src\\testinput.txt'
