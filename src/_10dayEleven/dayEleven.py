@@ -1,6 +1,5 @@
-import makeLink as mk
-
 def getData():
+    import makeLink as mk
     with open(file=mk.makeInputLink(11)) as f:
         data = f.read().split('\n')
     

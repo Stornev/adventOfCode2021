@@ -1,6 +1,6 @@
-import _10dayEleven.dayEleven as d11
+import _11dayTwelve.dayTwelve as d12
 
-data = d11.getData()
+data = d12.getData()
 
-print(d11.partOne(data))
-print(d11.partTwo(data))
+print(d12.partOne(data))
+# print(d12.partTwo(data))
