@@ -1,7 +1,7 @@
 # My code for Advent of Code!
 ## 2021 Edition
 
-### as of 9/16/2022
+### as of 10/1/2022
 - ~~Day 1~~
 - ~~Day 2~~
 - ~~Day 3~~
