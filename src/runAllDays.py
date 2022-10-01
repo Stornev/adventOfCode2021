@@ -8,6 +8,7 @@ import _06daySeven.daySeven as d7
 import _07dayEight.dayEight as d8
 import _08dayNine.dayNine as d9
 import _09dayTen.dayTen as d10
+import _10dayEleven.dayEleven as d11
 
 data1 = d1.getData()
 data2 = d2.getData()
@@ -20,6 +21,7 @@ data8p1 = d8.getData()
 data8p2 = d8.getData()
 data9 = d9.getData()
 data10 = d10.getData()
+data11 = d11.getData()
 
 
 print(f'Day 1 Part One: {str(d1.partOne(data1))}')
@@ -63,6 +65,9 @@ print(f'Day 9 Part One: {d9.partOne(data9)}')
 print(f'Day 9 Part Two: {d9.partTwo(data9)}\n')
 
 print(f'Day 10 Part One: {d10.partOne(data10)}')
-print(f'Day 10 Part Two: {d10.partTwo(data10)}')
+print(f'Day 10 Part Two: {d10.partTwo(data10)}\n')
+
+print(f'Day 11 Part One: {d11.partOne(data11)}')
+print(f'Day 11 Part Two: {d11.partTwo(data11)}')
 
 #TODO add more days if I've completed them below
